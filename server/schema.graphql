@@ -1,8 +1,24 @@
-type Book {
-  title: String
-  author: String
+enum Category {
+  Shirts
+  Jeans
+  Jackets
+  Sweaters
+  Accessories
+}
+
+type Product {
+  id: Int
+  category: Category
+  name: String
+  price: Float
+  image: String
 }
 
 type Query {
-  books: [Book]
+  products: [Product],
+  getProducts: [Product]
+}
+
+type Mutation {
+  addProduct(id: Int, category: Category, name: String, price: Float, image: String): Product
 }
