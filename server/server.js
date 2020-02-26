@@ -1,10 +1,10 @@
 const find = require('lodash/find')
 const express = require('express')
 const { ApolloServer, gql } = require('apollo-server-express');
-
+const cors = require('cors');
 const fs = require('fs')
 const typeDefs = fs.readFileSync('./schema.graphql',{encoding:'utf-8'})
-const defaultProductInfo = {id: 0, name: 'Shirts', category: '', price: '', image: ''}
+const defaultProductInfo = {id: 0, name: '', category: 'NA', price: 0, image: ''}
 const products = [
   {
     id: 1,
@@ -29,7 +29,7 @@ const resolvers = {
   },
   Mutation: {
     addProduct: (root, args) => {
-      const newProduct = Object.assign(defaultProductInfo, args)
+      const newProduct = Object.assign({}, defaultProductInfo, args);
       products.push(newProduct)
       const id = newProduct.id
       return find(products, (product) => product.id == id)
@@ -40,6 +40,9 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
+
+app.use(cors());
+
 server.applyMiddleware({ app });
 
 app.listen(4000, () => {

@@ -4,6 +4,7 @@ enum Category {
   Jackets
   Sweaters
   Accessories
+  NA
 }
 
 type Product {
