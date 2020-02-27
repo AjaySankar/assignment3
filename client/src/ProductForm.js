@@ -47,8 +47,8 @@ class ProductForm extends Component {
         this.props.onSave(this.state.product);
         const {category, name, image} = this.state.product;
         const id = Math.floor((Math.random() * 1000000) + 1);
-        const price = parseFloat(this.state.product.price.substring(1));
-        this.props.addProduct({
+        const price = parseFloat(this.state.product.price.substring(1)) || 0;
+        const promise = this.props.addProduct({
           variables: {
               id,
               category,
@@ -57,13 +57,18 @@ class ProductForm extends Component {
               image
           }
         })
-        // reset the form values to blank after submitting
-        this.setState({
+        promise.then(({data = {}}) => {
+          this.props.onSave();
+          // reset the form values to blank after submitting
+          this.setState({
             product: Object.assign({}, RESET_VALUES), 
             errors: {}
+          });
         })
-        // prevent the form submit event from triggering an HTTP Post
-        e.preventDefault()
+        .catch((error) => {
+          window.console.error(`Error occured while add new product: ${error || ''}`)
+        })
+        .finally(() => e.preventDefault()) // prevent the form submit event from triggering an HTTP Post
     }
   
     render () {

@@ -24,14 +24,10 @@ class ProductList extends Component {
       this.handleSave = this.handleSave.bind(this)
     }
 
-    handleSave(product) {
-      // product['price'] = product['price'].substring(1)
-      // this.setState((prevState) => {
-      //   let products = prevState.products
-      //   products[Math.floor((Math.random() * 1000000) + 1)] = product
-      //   return { products }
-      // })
-      // window.console.log(JSON.stringify(this.state.products))
+    handleSave() {
+      this.setState((prevState) => {
+        return {...this.state}
+      })
     }
     render() {
       if(this.props.allProductsQuery && this.props.allProductsQuery.loading) {
