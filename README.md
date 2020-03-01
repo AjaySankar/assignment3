@@ -25,11 +25,12 @@ Following is the example mutation to add a new product.
 ```
 mutation {
   addProduct(
-    id: 20
+    product: {
     category: Shirts
     name: "T-Shirt"
     price: 5.33
     image: "https://instagram.com/"
+    }
   ) {
     id
     category
@@ -38,6 +39,7 @@ mutation {
     image
   }
 }
+
 ```
 
 Run the following commands to create a client instance.

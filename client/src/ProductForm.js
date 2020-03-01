@@ -5,13 +5,14 @@ import {gql} from 'apollo-boost';
 const RESET_VALUES = {name: '', price: '$', category: 'Shirts', image: ''}
 
 const addProductMutation = gql `
-mutation addProduct ($id: Int!, $category: Category!, $name: String!, $price: Float!, $image: String!){
+mutation addProduct ($category: Category!, $name: String!, $price: Float!, $image: String!){
   addProduct(
-    id: $id
-    category: $category
-    name: $name
-    price: $price
-    image: $image
+    product: {
+      category: $category
+      name: $name
+      price: $price
+      image: $image
+    }
   ) {
     id
     category
@@ -46,11 +47,9 @@ class ProductForm extends Component {
     handleSave(e){
         this.props.onSave(this.state.product);
         const {category, name, image} = this.state.product;
-        const id = Math.floor((Math.random() * 1000000) + 1);
         const price = parseFloat(this.state.product.price.substring(1)) || 0;
         const promise = this.props.addProduct({
           variables: {
-              id,
               category,
               name,
               price,

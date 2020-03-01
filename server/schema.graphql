@@ -15,11 +15,18 @@ type Product {
   image: String
 }
 
+input inputProduct {
+  category: Category,
+  name: String,
+  price: Float,
+  image: String
+}
+
 type Query {
   products: [Product],
   getProducts: [Product]
 }
 
 type Mutation {
-  addProduct(id: Int, category: Category, name: String, price: Float, image: String): Product
+  addProduct(product: inputProduct): Product
 }

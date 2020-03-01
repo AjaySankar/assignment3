@@ -29,7 +29,7 @@ const resolvers = {
   },
   Mutation: {
     addProduct: (root, args) => {
-      const newProduct = Object.assign({}, defaultProductInfo, args);
+      const newProduct = Object.assign({}, defaultProductInfo, args.product || {}, {'id': Math.floor((Math.random() * 1000000) + 1)});
       products.push(newProduct)
       const id = newProduct.id
       return find(products, (product) => product.id == id)
